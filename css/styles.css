@@ -1,0 +1,109 @@
+body {
+    font-family: 'Abhaya Libre', serif;
+    /* font-family: 'Taviraj', serif;
+     font-family: 'Alegreya', serif;*/
+    background-color: rgb(37, 37, 35);
+    color: white;
+}
+
+#load {
+    font-size: 4em;
+}
+
+p {
+    font-size: 1.22em;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-size: 4em;
+}
+
+button {
+    color: black;
+}
+
+.charts {
+    margin-top: 50px;
+}
+
+.averages h4 {
+    display: inline-block;
+}
+
+circle {
+    opacity: 0;
+}
+
+path {
+    fill: white;
+    fill-opacity: 0.2;
+    stroke: white;
+    stroke-opacity: 0.8;
+}
+
+h3 {
+    margin-left: 30px;
+}
+
+#lows, #highs {
+    min-height: 155px;
+}
+
+.text-top {
+    width: auto;
+}
+
+.graph {
+    float: left;
+}
+
+text {
+    fill: white;
+    stroke: none;
+}
+
+
+text.label {
+    font-size: 85%;
+    stroke: none;
+}
+
+.opaque {
+    opacity: 0;
+}
+
+.lower {
+    margin-top: 35px;
+}
+
+div {
+    width: auto
+}
+
+div svg {
+    display: inline-block;
+}
+
+a, a:visited, a:hover {
+    color: orange;
+}
+
+footer {
+    margin-top: 25px;
+}
+
+footer ul {
+    text-align: center;
+}
+
+footer ul li {
+    display: inline;
+    margin-left: 25px;
+    font-size: 1.4em;
+}
+
+.subfooter {
+    margin-top: 50px;
+    margin-bottom: 25px;
+}

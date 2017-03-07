@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Visualization of record high and low temperatures in the United State" />
+    <meta name="keywords" content="Climate Change,Temperatures,Visualization,United States" />
+    <title>Warming World</title>
+    <link href="https://fonts.googleapis.com/css?family=Abhaya+Libre" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div id="note" class="row">
+        <p id="load" class="text-center">Loading ...</p>
+    </div>
+    <div class="row hide">
+        <div class="col-xs-12 col-sm-12 col-lg-12">
+            <h1 class="text-center">Warming World</h1>
+            <h3 class="text-center">A Look at Record Temperatures in the United States</h3>
+        </div>
+    </div>
+    <div class="row charts opaque">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+            <p>As many folks realize, February 2017 was very warm across the United States, with record highs set
+                across the country. In fact, the warming was so extreme that record highs topped record lows by a
+                ratio of 50 record highs tied or broken for every record low tied or broken. Numbers like this can be hard to picture. It seems like
+                a lot, but what does it really mean? The following visualization shows just how anomalous and extreme
+                February 2017 was across the United States.
+            </p>
+            <p>The map adds record highs and lows by date, while, the text loops through every record. It can take some
+            time to make it to the end, that's part of the point of showing just how unusual the month was. If this becomes tedious, you can click the "Jump to End" button to see
+                all records mapped.</p>
+            <p>If you'd like to explore the data more fully it's available from the
+                <a href="https://www.ncdc.noaa.gov/cdo-web/datatools/records">National Oceanic and Atmospheric Administration</a>.</p>
+        </div>
+
+        <div id="temp-graphs" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h2 class="text-center">February Temperature Records</h2>
+                <div>
+                    <button class="btn btn-default" id="start">Start Animation</button>
+                    <button class="btn btn-default" id="end">Jump to End</button>
+                </div>
+                <div id="lows" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <h2 class="text-center">Record Lows (Total: 124)</h2>
+                    <h2 class="text-center" id="date_low"></h2>
+                    <p class="text-center" id="location_low"></p>
+                </div>
+                <div id="highs" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <h2 class="text-center">Record Highs (Total: 6,190)</h2>
+                    <h2 class="text-center" id="date_high"></h2>
+                    <p class="text-center" id="location_high"></p>
+                </div>
+
+                <div id="map">
+                    <div id="legend">
+                        <h3>Record Type</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-sm-12 col-lg-12 hide">
+        <footer>
+            <ul class="list-unstyled">
+                <li><a href="../index.php">Other Visualizations</a></li>
+                <li><a href="../western_water">Western Water</a></li>
+                <li><a href="mailto:farrelldlfarrell@gmail.com">Email</a></li>
+                <li><a href="https://twitter.com/farrelldlfarrel">Twitter</a></li>
+            </ul>
+        </footer>
+    </div>
+    <div class=" row col-sm-12 col-lg-12 hide">
+        <div class="col-md-offset-1 subfooter">
+            <h3 class="text-center">Data Sources</h3>
+            <ul class="list-unstyled text-center">
+                <li><a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2">National Oceanic and Atmospheric Administration API</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.0/d3.min.js" charset="utf-8"></script>
+<script src="js/custom.min.js"></script>
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47256145-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+</body>
+</html>
