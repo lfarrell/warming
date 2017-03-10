@@ -9,21 +9,6 @@ d3.queue()
             parse_date = d3.timeParse("%Y-%m-%d"),
             date_format = d3.timeFormat("%B %e");
 
-        lows.forEach(function(d) {
-            d.date = parse_date(d.date);
-            d.latitude = +d.latitude;
-            d.longitude = +d.longitude;
-
-        });
-
-        highs.forEach(function(d) {
-            d.date = parse_date(d.date);
-            d.latitude = +d.latitude;
-            d.longitude = +d.longitude;
-        });
-
-        var all = highs.concat(lows);
-
         var i = 1;
 
         /*
@@ -44,8 +29,9 @@ d3.queue()
         path = path.projection(projection);
 
         var map_svg = d3.select('#map').append('svg')
+            .attr("class", "overlay")
             .attr("vector-effect", "non-scaling-stroke")
-            .attr("height", height)
+            .attr("height", height + margins.top + margins.bottom)
             .attr("width", width)
             .append('g');
 
@@ -59,31 +45,31 @@ d3.queue()
 
         maps.exit().remove();
 
-        var radius = (width < 600) ? 1.5 : 2.3;
+        lows.forEach(function(d) {
+            d.date = parse_date(d.date);
+            d.latitude = +d.latitude;
+            d.longitude = +d.longitude;
+            d.x = projection([d.longitude, d.latitude])[0];
+            d.y = projection([d.longitude, d.latitude])[1];
+        });
 
-        var records = map_svg.selectAll("circle")
-            .data(all);
+        highs.forEach(function(d) {
+            d.date = parse_date(d.date);
+            d.latitude = +d.latitude;
+            d.longitude = +d.longitude;
+            d.x = projection([d.longitude, d.latitude])[0];
+            d.y = projection([d.longitude, d.latitude])[1];
+        });
 
-        records.enter()
-            .append("circle")
-            .merge(records)
-            .attr("class", function(d) {
-                return d.type;
-            })
-            .attr("cx", function(d) {
-                return projection([d.longitude, d.latitude])[0]; })
-            .attr("cy", function(d) {
-                return projection([d.longitude, d.latitude])[1]; })
-            .attr("r", radius)
-            .style("fill", function(d) {
-                return (d.type === "high") ? "orange" : "steelblue";
-            });
+        var all = highs.concat(lows);
 
-        function showDot(data, d , iter) {
-            if(d.date.getDate() <= data[iter].date.getDate()) {
-                return 1;
-            }
-        }
+        var canvas = d3.select("#map").append("canvas")
+            .attr("class", "overlay")
+            .attr("width", width)
+            .attr("height", height);
+
+        var radius = (width < 600) ? 1.5 : 2;
+        var context = canvas.node().getContext("2d");
 
         drawLegend();
 
@@ -98,25 +84,25 @@ d3.queue()
         var date_high = d3.select("#date_high");
         var location_high = d3.select('#location_high');
 
-        var circles_low = d3.selectAll("circle.low");
-        var circles_high = d3.selectAll("circle.high");
+        var circles_low = [];
+        var circles_high = [];
 
         function animate() {
             var t = d3.interval(function(elapsed) {
                 if(lows[i] !== undefined || (i === num_highs - 1))  {
                     var iteration = (i === num_highs - 1) ? num_lows - 1 : i;
-                    circles_low.style("opacity", function(d) {
-                        return showDot(lows, d, iteration);
-                    });
+
+                    circles_low.push(lows[iteration]);
+                    showNodes(circles_low, iteration);
 
                     date_low.transition().text(date_format(lows[iteration].date));
                     location_low.transition().text(lows[iteration].stationName + ': ' + lows[iteration].value + ' C');
                 }
 
                 if(highs[i] !== undefined) {
-                    circles_high.style("opacity", function(d) {
-                        return showDot(highs, d, i);
-                    });
+                    circles_high.push(highs[i]);
+                    showNodes(circles_high, i);
+
                     date_high.transition().text(date_format(highs[i].date));
                     location_high.transition().text(highs[i].stationName + ': ' + highs[i].value + ' C');
                 }
@@ -129,12 +115,32 @@ d3.queue()
 
         d3.select('#start').on('click touchstart', function(d) {
             i = 1;
+            circles_low = [];
+            circles_high = [];
             animate();
         });
 
         d3.select('#end').on('click touchstart', function(d) {
             i = num_highs - 1;
+            showNodes(all, 0);
         });
+
+        function showNodes(values, clear) {
+            if(clear == 1) {
+                context.clearRect(0, 0, width, height);
+            }
+
+
+            for (var t = 0, n = values.length; t < n; ++t) {
+                var node = values[t];
+                context.beginPath();
+                context.moveTo(node.x, node.y);
+                context.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
+                context.lineWidth = 8;
+                context.fillStyle = (node.type === "high") ? "orange" : "steelblue";
+                context.fill();
+            }
+        }
 
         function drawLegend() {
             var fields = ["Record Low", "Record High"];

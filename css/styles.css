@@ -31,8 +31,13 @@ button {
     display: inline-block;
 }
 
-circle {
-    opacity: 0;
+.overlay {
+    position: absolute;
+    top: 0;
+}
+
+#map {
+    position: relative;
 }
 
 path {
@@ -90,7 +95,7 @@ a, a:visited, a:hover {
 }
 
 footer {
-    margin-top: 25px;
+    margin-top: 400px;
 }
 
 footer ul {
